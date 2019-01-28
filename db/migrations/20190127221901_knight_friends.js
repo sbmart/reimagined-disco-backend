@@ -1,4 +1,3 @@
-
 exports.up = knex => {
     return knex.schema.createTable('knight_friends', table => {
       table.integer('knight_one').references('knights.id');
