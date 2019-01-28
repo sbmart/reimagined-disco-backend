@@ -8,7 +8,7 @@ const app = express();
 app.use(morgan('tiny'));
 
 app.use('/rdisko', (req, res) => {
-  knex('rdisko').then(results => {res.send(results);});
+  knex('dragons').then(results => {res.send(results);});
 });
 
 const port = process.env.PORT || 5000;
