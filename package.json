@@ -1,6 +1,6 @@
 {
   "name": "reimagined-disco-backend",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A demo back end for a project initially aimed to demonstrate the power of GraphQL",
   "main": "server.js",
   "scripts": {
