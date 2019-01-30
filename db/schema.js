@@ -26,9 +26,34 @@ const KnightType = new GraphQLObjectType({
             });
           });
         }
+      },
+      dragons_owned: {
+          type: new GraphQLList(DragonType),
+          resolve(parentValue, args) {
+              return knex('dragon_owners').where('owner_id', parentValue.id)
+              .join('dragons', 'dragon_owners.dragon_id', '=', 'dragons.id')
+              .then(results => results);
+          }
+      },
+      dragons_followed: {
+          type: new GraphQLList(DragonType),
+          resolve(parentValue, args) {
+              return knex('dragon_followers').where('follower_id', parentValue.id)
+              .join('dragons', 'dragon_followers.dragon_id', '=', 'dragons.id')
+              .then(results => results);
+          }
       }
+
     })
   });
+
+  const DragonType = new GraphQLObjectType({
+      name: 'Dragon',
+      fields: () => ({
+          id: { type: GraphQLInt },
+          name: { type: GraphQLString }
+      })
+  })
 
   const RootQuery = new GraphQLObjectType({
     name: 'RootQueryType',
@@ -45,6 +70,19 @@ const KnightType = new GraphQLObjectType({
         resolve(parentValue, { id }) {
           return knex('knights').where('id', id).then(results => results[0]);
         }
+      },
+      dragons: {
+          type: new GraphQLList(DragonType),
+          resolve() {
+              return knex('dragons').then(results => results);
+          }
+      },
+      dragon: {
+          type: DragonType,
+          args: { id: { type: GraphQLInt} },
+          resolve(parentValue, { id }) {
+              return knex('dragons').where('id', id).then(results => results[0])
+          }
       }
     })
   });
