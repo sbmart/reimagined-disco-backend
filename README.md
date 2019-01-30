@@ -11,3 +11,11 @@ Steps to fire up the api:
 7.  `nodemon`
 
 
+Quiery in Graphiql:
+`{
+  knights {
+    id
+    name
+    email
+  }
+}`
