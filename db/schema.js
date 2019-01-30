@@ -67,7 +67,11 @@ const KnightType = new GraphQLObjectType({
               }
           },
           followers: {
-              type: new GraphQLList(KnightType)
+              type: new GraphQLList(KnightType),
+              resolve(parentValue, args) {
+                  return knex('dragon_followers').where('dragon_id', parentValue.id)
+                  .join('knights', 'dragon_followers.follower_id', '=', 'knights.id')
+              }
           }
       })
   })
