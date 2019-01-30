@@ -5,11 +5,13 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLSchema,
+  GraphQLFloat,
   GraphQLList
 } = graphql;
 
 const KnightType = new GraphQLObjectType({
     name: 'Knight',
+    description: 'A magical user with an account.',
     fields: () => ({
       id: { type: GraphQLInt },
       name: { type: GraphQLString },
@@ -49,9 +51,24 @@ const KnightType = new GraphQLObjectType({
 
   const DragonType = new GraphQLObjectType({
       name: 'Dragon',
+      description: 'A magical creature.',
       fields: () => ({
           id: { type: GraphQLInt },
-          name: { type: GraphQLString }
+          name: { type: GraphQLString },
+          species: { type: GraphQLString },
+          breed: { type: GraphQLString },
+          age: { type: GraphQLFloat},
+          owners: {
+              type: new GraphQLList(KnightType),
+              resolve(parentValue, args) {
+                  return knex('dragon_owners').where('dragon_id', parentValue.id)
+                  .join('knights', 'dragon_owners.owner_id', '=', 'knights.id')
+                  .then(results => results);
+              }
+          },
+          followers: {
+              type: new GraphQLList(KnightType)
+          }
       })
   })
 
