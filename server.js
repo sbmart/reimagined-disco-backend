@@ -22,5 +22,5 @@ const port = process.env.PORT || 5000;
 const url = process.env.URL || `http://localhost`
 
 app.listen(port, () => {
-  console.log(`Reimagined Disko API is up and running. ${url}:${port} GraphiQl is here: ${url}:${port}/graphql`);
+  console.log(`Reimagined Disko API is up and running. ${url}:${port}/rdisko GraphiQl is here: ${url}:${port}/graphql`);
 });
