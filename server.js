@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors')
 const dotenv = require('dotenv').config();
 const knex = require('./db/knex');
 const morgan = require('morgan');
@@ -6,7 +7,8 @@ const expressGraphQL = require('express-graphql');
 const schema = require('./db/schema');
 
 const app = express();
-
+app.use(cors())
+// https://www.npmjs.com/package/cors
 app.use(morgan('tiny'));
 
 app.use('/rdisko', (req, res) => {
